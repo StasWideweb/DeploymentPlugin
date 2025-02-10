@@ -1,0 +1,77 @@
+/* src/assets/css/deployment.css */
+.btn {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.deployment-container {
+    margin: 20px 0;
+}
+
+.status {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.status.red {
+    background-color: red;
+}
+
+.status.yellow {
+    background-color: yellow;
+}
+
+.status.green {
+    background-color: green;
+}
+
+.status.blue {
+    background-color: blue;
+}
+
+.alert-danger {
+    color: red;
+}
+
+.tabs {
+    margin-top: 20px;
+}
+.tab-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.tab-nav li {
+    margin-right: 10px;
+}
+.tab-nav a {
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px 5px 0 0;
+}
+.tab-nav .active a {
+    background: #ddd;
+    border-bottom: none;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}

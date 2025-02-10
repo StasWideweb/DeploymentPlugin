@@ -1,0 +1,66 @@
+{% import '_includes/forms' as forms %}
+{% set plugin = craft.app.plugins.getPlugin('deployment') %}
+{% set settings = plugin.getSettings() %}
+{% set webhookUrl = settings.webhookUrl %}
+
+{% if settings.integrationType == "api" %}
+    <div id="deploymentInfo"></div>
+
+    <div id="deploymentWrapper">
+        <form method="post" id="deployForm">
+            {{ actionInput('deployment/deployment/run') }}
+            {{ csrfInput() }}
+            <button id="deployButton" class="btn submit">Start Deployment</button>
+        </form>
+    </div>
+    <div id="deploymentContainer" class="deployment-container">
+        <div id="deploymentStatus" style="display: none;">
+            <strong>Status:</strong> <span id="statusMessage">Not started</span>
+        </div>
+
+        <div id="deploymentDetails" style="display: none;">
+            <strong>Current Deploy Details:</strong> <span id="deploymentId"></span><br>
+        </div>
+
+        <div id="deployment-steps" class="deployment-container"></div>
+    </div>
+{% else %}
+
+    {% set statusSuccess = craft.app.request.getQueryParam('success') %}
+
+    {% if statusSuccess is not null %}
+        {% if statusSuccess == '1' %}
+            <div class="alert alert-success">
+                Deployment has started successfully, it will take a few minutes for the updates to take effect!
+            </div>
+        {% else %}
+            <div class="alert alert-error">
+                Failed to start deployment. Please try again.
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <h1>Starting deployment</h1>
+    <p>Click the button below to start deploying your site.</p>
+
+    <form method="post" id="deployForm">
+        {{ actionInput('deployment/deployment/run-via-hook') }}
+        {{ csrfInput() }}
+
+        {% if not webhookUrl %}
+            <div class="alert alert-danger">
+                Please add webhook inside plugin settings
+            </div>
+        {% endif %}
+
+        <button {% if webhookUrl is empty %} disabled {% endif %} class="btn submit">Start Deployment</button>
+    </form>
+    <script>
+      document.getElementById('deployForm').addEventListener('submit', function(e) {
+        console.log('Форма отправляется!');
+      });
+    </script>
+{% endif %}
+{#$DEPLOY_WEBHOOK
+$DEPLOY_HQ_USER
+#}

@@ -1,0 +1,173 @@
+{% do view.registerAssetBundle("wideweb\\deployment\\DeploymentBundle") %}
+
+{% import "_includes/forms" as forms %}
+
+{% set tabs = {
+  "general": {label: "Tab1", url: "#tab1"},
+  "appearance": {label: "Tab2", url: "#tab2"},
+} %}
+
+<ul class="tab-nav">
+  <li class="active"><a href="#general">General</a></li>
+  <li><a href="#api">API</a></li>
+  <li><a href="#webhook">Webhook</a></li>
+</ul>
+
+<div id="general" class="tab-content active">
+  <h3>Choose what you need - deep integration, or simple launch via webhook</h3>
+
+  {{ forms.radioGroupField({
+    label: "Integration Type"|t,
+    id: "integrationType",
+    name: "integrationType",
+    options: {
+      "api": "API",
+      "webhook": "Webhook"
+    },
+    value: settings.integrationType
+  }) }}
+
+  <h3>These are mandatory fields that are needed for both API integration and webhook work.</h3>
+
+  {{ forms.autosuggestField({
+    label: "User"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "user",
+    name: "user",
+    value: settings.user,
+    placeholder: "company@mail.com",
+    autocomplete: "email",
+  }) }}
+
+  {{ forms.autosuggestField({
+    label: "Clone URL"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "cloneUrl",
+    name: "cloneUrl",
+    value: settings.cloneUrl,
+    placeholder: "git@bitbucket.org:{namespace}/{project-name}.git",
+  }) }}
+
+</div>
+
+<div id="api" class="tab-content">
+  {{ forms.autosuggestField({
+    label: "Base URL"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "baseUrl",
+    name: "baseUrl",
+    value: settings.baseUrl,
+    placeholder: "https://{name}.deployhq.com",
+  }) }}
+
+  {{ forms.autosuggestField({
+    label: "Project Permalink"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "projectPermalink",
+    name: "projectPermalink",
+    value: settings.projectPermalink,
+    placeholder: "project",
+  }) }}
+
+  {{ forms.autosuggestField({
+    label: "API Key"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "apiKey",
+    name: "apiKey",
+    value: settings.apiKey,
+    placeholder: "API Key",
+    autocomplete: "new-password",
+  }) }}
+
+  {{ forms.autosuggestField({
+    label: "Branch"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "branch",
+    name: "branch",
+    value: settings.branch,
+    placeholder: "master",
+  }) }}
+
+  {{ forms.autosuggestField({
+    label: "Email"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "email",
+    name: "email",
+    value: settings.email,
+    placeholder: "contact@mail.com",
+  }) }}
+
+</div>
+
+<div id="webhook" class="tab-content">
+  {{ forms.autosuggestField({
+    label: "Webhook"|t,
+    suggestEnvVars: true,
+    suggestAliases: true,
+    id: "webhookUrl",
+    name: "webhookUrl",
+    value: settings.webhookUrl,
+    placeholder: 'https://{name}.deployhq.com/deploy/{project-name}/id'
+  }) }}
+</div>
+{#
+
+<style>
+  .tabs {
+    margin-top: 20px;
+  }
+  .tab-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  .tab-nav li {
+    margin-right: 10px;
+  }
+  .tab-nav a {
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px 5px 0 0;
+  }
+  .tab-nav .active a {
+    background: #ddd;
+    border-bottom: none;
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let tabs = document.querySelectorAll(".tab-nav a");
+    let contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        tabs.forEach(t => t.parentElement.classList.remove("active"));
+        contents.forEach(c => c.classList.remove("active"));
+
+        this.parentElement.classList.add("active");
+        document.querySelector(this.getAttribute("href")).classList.add("active");
+      });
+    });
+  });
+</script>
+#}
