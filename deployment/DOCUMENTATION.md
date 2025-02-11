@@ -1,7 +1,7 @@
 # Full instructions for setting up plugin fields
  Proceed to the cp > settings, click on plugin icon:
 
-![img.png](src/asstes/img.png)
+![img.png](src/assets/img.png)
 
 ## There is three tabs in plugin settings
 
