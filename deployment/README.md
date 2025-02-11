@@ -8,13 +8,29 @@ This plugin requires Craft CMS 5.5.0 or later, and PHP 8.2 or later.
 
 ## Installation
 
-You can install this plugin from the Plugin Store or with Composer.
+- Download the plugin archive
+- unzip the plugin archive
+- place the plugin deployment folder in the plugins directory, if it does not exist,
+create it so that the full path to the plugin looks like this: /path/to/my-project.test/plugins/deployment
+- open your project composer.json, and add plugin directory to the repositories:
 
-#### From the Plugin Store
+      {
+       "type": "path",
+       "url": "plugins/deployment"
+      }
+- example of the result;
 
-Go to the Plugin Store in your project’s Control Panel and search for “Deployment”. Then press “Install”.
-
-#### With Composer
+      "repositories": [
+        {
+          "type": "composer",
+          "url": "https://composer.craftcms.com",
+          "canonical": false
+        },
+        {
+          "type": "path",
+          "url": "plugins/deployment"
+        }
+      ]
 
 Open your terminal and run the following commands:
 
